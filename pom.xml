@@ -23,9 +23,9 @@
   </parent>
 
   <scm>
-    <connection>scm:git:git://github.com/opentable/otj-pg-embedded.git</connection>
-    <developerConnection>scm:git:git@github.com:opentable/otj-pg-embedded.git</developerConnection>
-    <url>http://github.com/opentable/otj-pg-embedded</url>
+    <connection>scm:git:git://github.com/i-novus-llc/otj-pg-embedded.git</connection>
+    <developerConnection>scm:git:git@github.com:i-novus-llc/otj-pg-embedded.git</developerConnection>
+    <url>http://github.com/i-novus-llc/otj-pg-embedded</url>
     <tag>HEAD</tag>
   </scm>
 

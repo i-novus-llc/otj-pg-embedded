@@ -1,3 +1,7 @@
+0.13.2
+------
+* Russian language ispell dictionaries  
+
 0.13.1
 ------
 * PR #104 - improved logging names
