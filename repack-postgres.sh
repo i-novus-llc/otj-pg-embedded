@@ -4,6 +4,8 @@
 VERSION=10.6-1
 
 RSRC_DIR=$PWD/target/generated-resources
+EXT_DIR=$PWD/ext
+EXT_UNPACKED_DIR=$PWD/target/ext
 
 [ -e $RSRC_DIR/.repacked ] && echo "Already repacked, skipping..." && exit 0
 
@@ -19,7 +21,11 @@ mkdir -p dist/ target/generated-resources/
 [ -e $OSX_DIST ] || wget -O $OSX_DIST "http://get.enterprisedb.com/postgresql/postgresql-$VERSION-osx-binaries.zip"
 [ -e $WINDOWS_DIST ] || wget -O $WINDOWS_DIST "http://get.enterprisedb.com/postgresql/postgresql-$VERSION-windows-x64-binaries.zip"
 
+mkdir -p $EXT_UNPACKED_DIR/share/postgresql/tsearch_data
+unzip $EXT_DIR/ru-dict.zip -d $EXT_UNPACKED_DIR/share/postgresql/tsearch_data
+
 tar xzf $LINUX_DIST -C $PACKDIR
+cp -f $EXT_UNPACKED_DIR/share/postgresql/tsearch_data/* $PACKDIR/pgsql/share/postgresql/tsearch_data
 pushd $PACKDIR/pgsql
 tar cJf $RSRC_DIR/postgresql-Linux-x86_64.txz \
   share/postgresql \
@@ -32,6 +38,7 @@ popd
 rm -fr $PACKDIR && mkdir -p $PACKDIR
 
 unzip -q -d $PACKDIR $OSX_DIST
+cp -f $EXT_UNPACKED_DIR/share/postgresql/tsearch_data/* $PACKDIR/pgsql/share/postgresql/tsearch_data
 pushd $PACKDIR/pgsql
 tar cJf $RSRC_DIR/postgresql-Darwin-x86_64.txz \
   share/postgresql \
@@ -51,6 +58,7 @@ popd
 rm -fr $PACKDIR && mkdir -p $PACKDIR
 
 unzip -q -d $PACKDIR $WINDOWS_DIST
+cp -f $EXT_UNPACKED_DIR/share/postgresql/tsearch_data/* $PACKDIR/pgsql/share/tsearch_data
 pushd $PACKDIR/pgsql
 tar cJf $RSRC_DIR/postgresql-Windows-x86_64.txz \
   share \
@@ -65,5 +73,6 @@ tar cJf $RSRC_DIR/postgresql-Windows-x86_64.txz \
   bin/*.dll
 popd
 
+rm -rf $EXT_UNPACKED_DIR
 rm -rf $PACKDIR
 touch $RSRC_DIR/.repacked
