@@ -26,12 +26,12 @@
     <connection>scm:git:git://github.com/i-novus-llc/otj-pg-embedded.git</connection>
     <developerConnection>scm:git:git@github.com:i-novus-llc/otj-pg-embedded.git</developerConnection>
     <url>http://github.com/i-novus-llc/otj-pg-embedded</url>
-    <tag>HEAD</tag>
+    <tag>otj-pg-embedded-rus-0.13.2-Alpha-1</tag>
   </scm>
 
   <groupId>ru.i-novus.components</groupId>
   <artifactId>otj-pg-embedded-rus</artifactId>
-  <version>0.13.2-SNAPSHOT</version>
+  <version>0.13.2-Alpha-1</version>
   <description>Embedded PostgreSQL driver</description>
 
   <properties>
