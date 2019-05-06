@@ -1,4 +1,17 @@
 language: java
 jdk:
   - oraclejdk8
-
+before_deploy:
+  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
+  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+deploy:
+  provider: releases
+  api_key:
+    secure: sXWva1SpcpcFQfO6Dwq0+Ot3jqwgecvLdLXePnKEeQTGwujLuCbfnNYgpnnv8PD1VHp/9+ekcBj1XDNFz9QHTMNGS4kbH17V7uy2swTAOMCs+ArTm5vzwl8Bj3SBRKRRHPgikf6Q4SgFJFwBYdArP75MWNQ8XFolr/RmNZ9MRZlRy6L0KQ1T0QqKIJiX58UTMtt/VZP/921psgV89tEbEDNT/jzwS08AUyXeXt2fxujq6hrPsD9zVq+BIDLGgavWcRPnb+kyfHGbj2n0sX7qZwNwjD8HjRY9x7YDbqf3bn/UUP8q1xgoZejzGRG7CBy4UFV0GG3ath7SMAtidFg4KXjwSpN+8XVfKPaWZC9gmr/lS0tEqi7Njuzu9SbSPzhi66pcxCG6UsQpwhGodQms9ElXdmx/ek2T7y+p668t8Giut18W1dpnUpzi2vB0ZgeZfCF6a/n15WqiFntg4arz7XPF0gC1BcH62wSpUV7ouS8s8n+hPRaaJItQABxDViro0UCNTsxgeboRI7eRz/1yuUY66XrmwSBQxgeg0UYZKFklX/2bxmSNkYXMAfzer1sYsmKY3LWjI1YE/W2OXopiE1Wzbt9wcfXFEhZ481ABJBkgORuyXSgaY7wSmcBVz/nTVSFn2ejnm3PaB/JECgAhHYcVd7tolnaC/VaK8FciTGo=
+  file:
+    - target/otj-pg-embedded-rus-$project.version.jar
+    - target/otj-pg-embedded-rus-$project.version-sources.jar
+  skip_cleanup: true
+  name: $project_version
+  on:
+    repo: i-novus-llc/otj-pg-embedded
