@@ -7,12 +7,11 @@ env:
     - secure: CvD3NZod1HMjgl2hiBdlY1zUCk06DNDnz8Lpl8Gp0a5Wzus1EyMqP3cvDgu2iwe6mfKIf7Uoz4tOrct3FLIZf7/maeqflB/hgd1iXLfug5vNwKDfrucLjluU5uEqnpcaT0RroiGX1Pu5qNLlqJBm41Tkj9UUKoa9Jd41UMCOzzYTzloMqVYZHonKi7lI/ZlC/4/Mhu7SDvoHnz1Sc+9OkelrjwOYNZ4IieNvmy2QaBKzTnZ4ry35bR5DI1kr+L18AuMyiG5pnquyYJdd6OOOscxnlV2AcZuj+8rw9eRoLEcfSIvX8nSOijXADKIXt8en2ah9QRqMDiZVtKFgPf7Suhie0/RnkKnrVtu4DXvxCgJAMO9Dq9CHYuKsq+4w9m9pOItS+fQjoMYu4GgYOVLPW8/EkuLB9Qa7M21v87JWAWcD968b+5e15cCupK3rKXskXB4WnKN8NM92abwZhPyUpDOYSmy07lJlY4NGMP0oyR5v71rhIxDPtjGps3addYHH3Q3oGLvngKcgFWjFxuAq1xijBGrBvldP7BWHEJVffufx1ntEMkKyL06uqsPR7KSXPI8ffpCL7IBkQjQCND8AV+Onndw2ZNZQ9ruSYj1k3GmL4NsmbmjZCbHqtduKIIZdP5XbRPVyz3UVgS6K1Lka4du1nsOf+NJZsXrL/lhLbJk=
     - secure: RlPvp+R+gAILbqQwkwF46mqN9fpjcqTEWocYtR1rKz6To1j3+Ocyh2A4BldNr1IXIrZYEnbzTpl2MzN59W8xcTmBjZiLNQs30J0yQe05s88YlJaoK/CWW2r1GJe+AMgmOb/X5JXiktYQN+J7p7uSF3kmfTvA+KbpgP+pRKTig/Eowl76uXqxStLEyPALXgChA8yf1sUR21I3v5YzENY4pvYaWbCDTNTW6/pOwgw1BP17Dbwhx1R7o5r1VK/Tk7rnAA8yheXTB/fBqLD9p5+MWQd83CmJDz0L0uJXXY9aZwSHWSPsn2H3W8+MdVoprK5NEuwxRLsEyFCCSftv1GNiNoGPSrZa7fURA+8k1eg0gcUKDHtrNS3pLbwqfAvSdRqpOvCGcGeC0tvgrGrKs+V+y3nFVubToFzry4tVm3I455fMKfOAf3/3sHM6W6e/19194N7iiEbhkMA4845ZS9Iqu1NQ51iRqrS6qGYDpvbUjNbJPOtDz1Eje+wgKBq+es/NV9dZDUK6reKlsgBGwa+0JdyMYen9BaNXPVwHIHes2N9Y/GBPB9H/rYklH0oZpTzlrGwNGOCBld7/PPudsF8WVlQtUV4NAtS0uXkD+P4dYKaji3l/JwjutqqITfyU7BRfCkEvo1LatqhXx+8dffH9mgR5e9yZcViUFn06va++Oas=
 before_install:
-  - openssl aes-256-cbc -K $encrypted_7d57f850b7c3_key -iv $encrypted_7d57f850b7c3_iv
-    -in deployment/signingkey.asc.enc -out deployment/signingkey.asc -d
-install: mvn -Dgpg.skip install
-after_success:
-- gpg2 --keyring=$TRAVIS_BUILD_DIR/pubring.gpg --no-default-keyring --import deployment/signingkey.asc
-- gpg2 --allow-secret-key-import --keyring=$TRAVIS_BUILD_DIR/secring.gpg --no-default-keyring
-  --import deployment/signingkey.asc
-- mvn clean deploy --settings deployment/settings.xml -Dgpg.executable=gpg2 -Dgpg.keyname=CDD94827F9ECF35E39CD404EC25E184AC37C66DE
-  -Dgpg.passphrase=$PASSPHRASE -Dgpg.publicKeyring=$TRAVIS_BUILD_DIR/pubring.gpg -Dgpg.secretKeyring=$TRAVIS_BUILD_DIR/secring.gpg
+  - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+  - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+install:
+  mvn --settings .maven.xml install -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+
+## Build and release to maven central
+script:
+  mvn clean deploy --settings .maven.xml -B -U -Prelease
