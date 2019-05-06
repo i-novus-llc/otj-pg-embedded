@@ -14,4 +14,4 @@ install:
 
 ## Build and release to maven central
 script:
-  mvn clean deploy --settings .maven.xml -B -U -Prelease
+  mvn --settings .maven.xml clean deploy -Prelease -B -U
