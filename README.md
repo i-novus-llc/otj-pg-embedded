@@ -72,7 +72,7 @@ If you experience difficulty running `otj-pg-embedded` tests on Windows, make su
 you've installed the appropriate MFC redistributables.
 
 * [Microsoft Site](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads])
-* [Github issue discussing this](https://github.com/opentable/otj-pg-embedded/issues/65)
+* [Github issue discussing this](https://github.com/i-novus-llc/otj-pg-embedded/issues/65)
 
 ----
 Copyright (C) 2017 OpenTable, Inc
