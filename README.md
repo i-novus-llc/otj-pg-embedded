@@ -3,7 +3,7 @@ OpenTable Embedded PostgreSQL Component
 
 Allows embedding PostgreSQL into Java application code with
 no external dependencies.  Excellent for allowing you to unit
-test with a "real" Postgres without requiring end users to install
+test with a "real" PostgreSQL without requiring end users to install
 and set up a database cluster.
 
 [![Build Status](https://travis-ci.org/i-novus-llc/otj-pg-embedded.svg)](https://travis-ci.org/i-novus-llc/otj-pg-embedded)
@@ -46,9 +46,9 @@ This will create an independent database for every test with the given schema lo
 Database templates are used so the time cost is relatively small, given the superior isolation truly
 independent databases gives you.
 
-## Postgres version
+## PostgreSQL version
 
-The JAR file contains bundled version of Postgres. You can pass different Postgres version by implementing [`PgBinaryResolver`](src/main/java/com/opentable/db/postgres/embedded/PgBinaryResolver.java).
+The JAR file contains bundled version of PostgreSQL. You can pass different PostgreSQL version by implementing [`PgBinaryResolver`](src/main/java/com/opentable/db/postgres/embedded/PgBinaryResolver.java).
 
 Example:
 ```java
